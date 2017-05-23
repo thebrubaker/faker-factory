@@ -8,9 +8,9 @@ class FakerInstance {
    * @param  {object} attributes  The fake attributes.
    * @return {FakerInstance}
    */
-  constructor (model, attributes) {
+  constructor (model, callback) {
     this.model = model
-    this.attributes = attributes
+    this.callback = callback
     this.quantity = 1
   }
 
@@ -47,7 +47,7 @@ class FakerInstance {
    * @return {object}
    */
   createModel (attributes) {
-    return new this.model(Object.assign(this.attributes, attributes))
+    return new this.model(Object.assign(this.callback(faker), attributes))
   }
 }
 
@@ -71,7 +71,7 @@ function factory (label, quantity = 1) {
  * @param  {Function}  callback  A callback that returns an array of faker data.
  */
 factory.register = (label, model, callback) => {
-  registeredFakes[label] = new FakerInstance(model, callback(faker))
+  registeredFakes[label] = new FakerInstance(model, callback)
 }
 
 /**

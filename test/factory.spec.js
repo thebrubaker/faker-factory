@@ -22,7 +22,7 @@ describe('factory', function() {
     })
     let instance = factory.getRegisteredFaker('foo')
     assert(instance.quantity === 1)
-    assert(instance.attributes.foo === 'bar')
+    assert(instance.callback().foo === 'bar')
     assert(instance.model === TestObject)
   })
   it('should make a single new instance from the factory', function() {
